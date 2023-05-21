@@ -2,7 +2,7 @@ name: Execução Periódica
 
 on:
   schedule:
-    - cron: '*/15 * * * *' # Executar a cada 15 minutos e
+    - cron: '*/10 * * * *' # Executar a cada 15 minutos e
 jobs:
   build:
     runs-on: ubuntu-latest
