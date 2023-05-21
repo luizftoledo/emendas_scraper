@@ -2,7 +2,7 @@ name: Execução Periódica
 
 on:
   schedule:
-    - cron: */5 * * * * # Executar a cada 5 minutos
+    - cron: '*/5 * * * *' # Executar a cada 5 minutos
 
 jobs:
   build:
