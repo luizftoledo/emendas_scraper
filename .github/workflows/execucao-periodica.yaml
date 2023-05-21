@@ -1,9 +1,8 @@
 name: raspador_emendas
 
 on:
-  push:
-    branches:
-      - master
+  schedule:
+    - cron: '*/2 * * * *' # Executar a cada 2 minutos
 
 jobs:
   raspador_emendas:
