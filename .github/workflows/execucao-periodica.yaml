@@ -2,13 +2,15 @@ name: raspador_emendas
 
 on:
   schedule:
-    - cron: '*/10 * * * *'
+    - cron: '*/2 * * * *' # Executar a cada 2 minutos
 
 jobs:
   raspador_emendas:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
       - uses: actions/setup-python@v2
         with:
           python-version: 3.9
