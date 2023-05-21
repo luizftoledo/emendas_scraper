@@ -1,20 +1,16 @@
-name: Execução Periódica
+name: raspador_emendas
 
 on:
   schedule:
-    - cron: '*/10 * * * *' # Executar a cada 15 minutos e
+    - cron: */5 * * * *
+
 jobs:
-  build:
+  raspador_emendas:
     runs-on: ubuntu-latest
-
     steps:
-      - name: Checkout do código
-        uses: actions/checkout@v2
-
-      - name: Configurar Python
-        uses: actions/setup-python@v2
+      - uses: actions/checkout@v2
+      - uses: actions/setup-python@v2
         with:
-          python-version: 3.9.7 # Substitua 'x' pela versão desejada do Python
-
-      - name: Executar código Python
-        run: python raspador_emendas.py
+          python-version: 3.9
+      - run: pip install -r requirements.txt
+      - run: python raspador_emendas.py
