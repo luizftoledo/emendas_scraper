@@ -1,8 +1,9 @@
 name: raspador_emendas
-
-on:
+    
+    on:
   schedule:
-    - cron: '*/2 * * * *' # Executar a cada 2 minutos
+    # Runs "at minute 55 past every hour" (see https://crontab.guru)
+    - cron: '2 * * * *'
 
 jobs:
   raspador_emendas:
