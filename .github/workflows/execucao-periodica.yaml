@@ -2,8 +2,8 @@ name: raspador_emendas
 
 on:
   schedule:
-    - cron: '*/2 * * * *' 
-    
+    # Runs each 5 min
+    - cron: '5 * * * *'
 jobs:
   raspador_emendas:
     runs-on: ubuntu-latest
