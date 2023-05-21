@@ -1,11 +1,11 @@
-name: raspador_emendas
+name: Execução Periódica
 
 on:
   schedule:
-    - cron: */5 * * * *
+    - cron: */5 * * * * # Executar a cada 5 minutos
 
 jobs:
-  raspador_emendas:
+  build:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
