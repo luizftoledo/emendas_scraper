@@ -189,7 +189,8 @@ import glob
 from datetime import datetime, timedelta
 
 # Pasta de downloads
-pasta_downloads = '/Users/luizfernandotoledo/Downloads'  # Ajuste o caminho para a pasta de downloads no sistema Mac
+DATA_DIR = os.path.join(os.path.dirname(os.path.realpath(__file__)), 'data')
+pasta_downloads = DATA_DIR
 
 # Data e hora de criação desejada (uma hora atrás)
 data_hora_desejada = datetime.now() - timedelta(hours=1)
