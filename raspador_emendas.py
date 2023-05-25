@@ -4,6 +4,7 @@
 # In[70]:
 
 
+import os
 import pandas as pd
 import time
 from selenium import webdriver
@@ -17,12 +18,24 @@ from bs4 import BeautifulSoup
 from selenium.webdriver.chrome.options import Options
 
 
+
 # In[71]:
 
+# Pasta de downloads
+DATA_DIR = os.path.join(os.path.dirname(os.path.realpath(__file__)), 'data')
+pasta_downloads = DATA_DIR
 
 # Configure Chrome options
-options = Options()
-options.headless = True
+options = webdriver.ChromeOptions()
+options.add_argument('--headless=new')
+options.add_argument('--remote-debugging-port=9222')
+options.add_experimental_option('prefs', {
+    "profile.default_content_settings.popups": 0,
+    "download.default_directory": f"{DATA_DIR.rstrip('/')}/",
+    "download.prompt_for_download": False,
+    "download.directory_upgrade": True,
+})
+print(f"Download em {DATA_DIR}")
 
 # Create WebDriver instance with ChromeDriverManager
 driver = webdriver.Chrome(ChromeDriverManager().install(), options=options)
@@ -52,7 +65,7 @@ print('ESPEREI 25 SEG')
 
 # fechar o balaozinho
 
-element = driver.find_element_by_xpath('/html/body/div[17]/div/div/div[7]/div[2]/table/tbody/tr/td')
+element = driver.find_element(by=By.XPATH, value='/html/body/div[17]/div/div/div[7]/div[2]/table/tbody/tr/td')
 element.click()
 print('FECHEI O BALAO')
 
@@ -68,7 +81,7 @@ print('ESPEREI MAIS 5')
 
 
 # clicar em gráficos customizados
-element = driver.find_element_by_xpath('/html/body/div[17]/div/div/div[694]/div[2]/table/tbody/tr/td')
+element = driver.find_element(by=By.XPATH, value='/html/body/div[17]/div/div/div[694]/div[2]/table/tbody/tr/td')
 element.click()
 print('CLIQUEI EM GRAFICO CUSTOMIZADO')
 
@@ -84,7 +97,7 @@ print('ESPEREI MAIS 15')
 
 
 # clicar em 2023
-element = driver.find_element_by_xpath('/html/body/div[17]/div/div/div[55]/div[2]/div/div[1]/div[6]/div[1]')
+element = driver.find_element(by=By.XPATH, value='/html/body/div[17]/div/div/div[55]/div[2]/div/div[1]/div[6]/div[1]')
 element.click()
 print('ESCOLHI 2023')
 
@@ -100,7 +113,7 @@ print('ESPEREI MAIS 15')
 
 
 # clicar em AUTOR DA EMENDA
-element = driver.find_element_by_xpath('/html/body/div[17]/div/div/div[31]/div[2]/div/div[1]/div[4]/div[3]')
+element = driver.find_element(by=By.XPATH, value='/html/body/div[17]/div/div/div[31]/div[2]/div/div[1]/div[4]/div[3]')
 element.click()
 print('ESCOLHI AUTOR DA EMENDA')
 
@@ -118,7 +131,7 @@ print('ESPEREI MAIS 15')
 
 # CLICAR EM EMPENHADO
 
-element = driver.find_element_by_xpath('/html/body/div[17]/div/div/div[31]/div[2]/div/div[1]/div[20]/div[3]')
+element = driver.find_element(by=By.XPATH, value='/html/body/div[17]/div/div/div[31]/div[2]/div/div[1]/div[20]/div[3]')
 element.click()
 
 print('ESCOLHI EMPENHADO')
@@ -126,7 +139,7 @@ time.sleep(10)
 print('ESPEREI 10')
 
 # DOTACAO INICIAL
-element = driver.find_element_by_xpath('/html/body/div[17]/div/div/div[31]/div[2]/div/div[1]/div[18]/div[3]')
+element = driver.find_element(by=By.XPATH, value='/html/body/div[17]/div/div/div[31]/div[2]/div/div[1]/div[18]/div[3]')
 element.click()
 
 print('ESCOLHI DOTACAO INICIAL')
@@ -136,7 +149,7 @@ print('ESPEREI MAIS 10')
 
 # clicar em pago
 
-element = driver.find_element_by_xpath('/html/body/div[17]/div/div/div[31]/div[2]/div/div[1]/div[24]/div[3]')
+element = driver.find_element(by=By.XPATH, value='/html/body/div[17]/div/div/div[31]/div[2]/div/div[1]/div[24]/div[3]')
 element.click()
 print('ESCOLHI PAGO')
 
@@ -183,13 +196,10 @@ print('ESPEREI MAIS 10')
 # In[92]:
 
 
-import os
 import pandas as pd
 import glob
 from datetime import datetime, timedelta
 
-# Pasta de downloads
-pasta_downloads = '/Users/luizfernandotoledo/Downloads'  # Ajuste o caminho para a pasta de downloads no sistema Mac
 
 # Data e hora de criação desejada (uma hora atrás)
 data_hora_desejada = datetime.now() - timedelta(hours=1)
