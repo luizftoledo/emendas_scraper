@@ -1,2 +1,2 @@
 # emendas_scraper
-raspador_de_emendas
+Baixa diariamente os dados de execução de emendas parlamentares do Siga[https://www9.senado.gov.br/QvAJAXZfc/opendoc.htm?document=senado%2Fsigabrasilpainelcidadao.qvw&host=QVS%40www9&anonymous=true&Sheet=SH14] e salva arquivos reusmidos por parlamentar e partido.
