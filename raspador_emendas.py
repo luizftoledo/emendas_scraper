@@ -14,10 +14,15 @@ from selenium.webdriver.common.keys import Keys
 from selenium.webdriver.common.by import By
 from selenium.webdriver.support import expected_conditions as EC
 from selenium.webdriver.support.ui import Select
+from selenium.webdriver.chrome.service import Service
 from webdriver_manager.chrome import ChromeDriverManager
+from webdriver_manager.core.utils import ChromeType
 from selenium.webdriver.support.ui import WebDriverWait
 from bs4 import BeautifulSoup
 from selenium.webdriver.chrome.options import Options
+
+
+
 
 
 
@@ -27,11 +32,25 @@ from selenium.webdriver.chrome.options import Options
 DATA_DIR = os.path.join(os.path.dirname(os.path.realpath(__file__)), 'data')
 DOWNLOAD_DIR = Path.home() / 'Downloads'
 
+
 # Configure Chrome options
 options = webdriver.ChromeOptions()
-options.add_argument('--headless=new')
-options.add_argument('--remote-debugging-port=9222')
-driver = webdriver.Chrome(ChromeDriverManager().install(), options=options)
+options_str = [
+    "--headless=new",
+    "--remote-debugging-port=9222",
+    "--disable-gpu",
+    "--window-size=1920,1200",
+    "--ignore-certificate-errors",
+    "--disable-extensions",
+    "--no-sandbox",
+    "--disable-dev-shm-usage"
+]
+for option in options_str:
+    options.add_argument(option)
+driver = webdriver.Chrome(
+    service=Service(ChromeDriverManager(chrome_type=ChromeType.CHROMIUM).install()),
+    options=options
+)
 
 
 # In[72]:
