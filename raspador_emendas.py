@@ -130,11 +130,11 @@ print('ESCOLHI EMPENHADO')
 time.sleep(10)
 print('ESPEREI 10')
 
-# DOTACAO INICIAL
-element = driver.find_element(by=By.XPATH, value='/html/body/div[17]/div/div/div[31]/div[2]/div/div[1]/div[18]/div[3]')
+# AUTORIZADO
+element = driver.find_element(by=By.XPATH, value='/html/body/div[17]/div/div/div[31]/div[2]/div/div[1]/div[19]/div[3]')
 element.click()
 
-print('ESCOLHI DOTACAO INICIAL')
+print('ESCOLHI AUTORIZADO')
 time.sleep(10)
 print('ESPEREI MAIS 10')
 
@@ -144,6 +144,15 @@ print('ESPEREI MAIS 10')
 element = driver.find_element(by=By.XPATH, value='/html/body/div[17]/div/div/div[31]/div[2]/div/div[1]/div[24]/div[3]')
 element.click()
 print('ESCOLHI PAGO')
+
+time.sleep(10)
+print('ESPEREI MAIS 10')
+
+# clicar em pago rp
+
+element = driver.find_element(by=By.XPATH, value='/html/body/div[17]/div/div/div[31]/div[2]/div/div[1]/div[25]/div[3]')
+element.click()
+print('ESCOLHI PAGO RP')
 
 time.sleep(10)
 print('ESPEREI MAIS 10')
@@ -249,8 +258,8 @@ print('SALVEI O CSV')
 df_geral = pd.read_csv(nome_arquivo)
 
 
-df_geral.columns = df.columns.str.lower().str.replace(' ', '_').str.replace('(', '_').str.replace(')', '').str.replace('__', '_')
-pd.options.display.float_format = '{:.6f}'.format
+df_geral.columns = df_geral.columns.str.lower().str.replace(' ', '_').str.replace('(', '_').str.replace(')', '').str.replace('__', '_')
+df_geral = df_geral[['autor', 'autor_tipo', 'partido', 'autor_uf', 'autorizado_r$', 'empenhado_r$', 'pago_r$', 'rp_pago_r$']]
 df_geral.to_csv(nome_arquivo, index=False)
 df_geral.head(3)
 
@@ -264,14 +273,15 @@ df_geral.head(3)
 # In[97]:
 
 
-# Calcular a soma de valores empenhados e dotação inicial por partido
-df_partido = df_geral.groupby('partido').sum()
-
-# Calcular a porcentagem total de cada partido
-df_partido['Porcentagem'] = df_partido['empenhado_r$'] / df_partido['dotação_inicial_r$'] * 100
+df_soma = pd.DataFrame({
+    'autorizado_r$': [df_geral['autorizado_r$'].sum()],
+    'empenhado_r$': [df_geral['empenhado_r$'].sum()],
+    'pago_r$': [df_geral['pago_r$'].sum()],
+    'rp_pago_r$': [df_geral['rp_pago_r$'].sum()]
+})
 
 # Exibir o DataFrame com a porcentagem total de cada partido
-tabela_final = df_partido.sort_values('Porcentagem', ascending=False)
+tabela_final = df_soma
 tabela_final_path = os.path.join(
     DATA_DIR,
     f'tabela_final_{data_atual.strftime("%Y-%m-%d")}.csv'
