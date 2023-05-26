@@ -4,7 +4,6 @@ version = "0.1.0"
 description = ""
 authors = ["Luiz Toledo <luiz@fiquemsabendo.com.br>"]
 readme = "README.md"
-packages = [{include = "emendas_scraper"}]
 
 [tool.poetry.dependencies]
 python = "^3.11"
