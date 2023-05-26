@@ -1,0 +1,20 @@
+[tool.poetry]
+name = "emendas-scraper"
+version = "0.1.0"
+description = ""
+authors = ["Luiz Toledo <luiz@fiquemsabendo.com.br>"]
+readme = "README.md"
+packages = [{include = "emendas_scraper"}]
+
+[tool.poetry.dependencies]
+python = "^3.11"
+openpyxl = "^3.1.2"
+pandas = "^2.0.1"
+selenium = "^4.9.1"
+webdriver-manager = "^3.8.6"
+beautifulsoup4 = "^4.12.2"
+
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
