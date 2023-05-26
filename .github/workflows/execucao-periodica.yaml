@@ -15,4 +15,11 @@ jobs:
         with:
           python-version: 3.9
       - run: make install
-      - run: make
+      - name: Execute Script
+        uses: nick-fields/retry@v2
+        with:
+          max_attempts: 3
+          retry_on: error
+          timeout_seconds: 120
+          retry_wait_seconds: 600
+          command: make
