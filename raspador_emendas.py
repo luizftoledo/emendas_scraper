@@ -4,9 +4,11 @@
 # In[70]:
 
 
+import glob
 import os
 import pandas as pd
 import time
+from pathlib import Path
 from selenium import webdriver
 from selenium.webdriver.common.keys import Keys
 from selenium.webdriver.common.by import By
@@ -23,23 +25,13 @@ from selenium.webdriver.chrome.options import Options
 
 # Pasta de downloads
 DATA_DIR = os.path.join(os.path.dirname(os.path.realpath(__file__)), 'data')
-pasta_downloads = DATA_DIR
+DOWNLOAD_DIR = Path.home() / 'Downloads'
 
 # Configure Chrome options
 options = webdriver.ChromeOptions()
 options.add_argument('--headless=new')
 options.add_argument('--remote-debugging-port=9222')
-options.add_experimental_option('prefs', {
-    "profile.default_content_settings.popups": 0,
-    "download.default_directory": f"{DATA_DIR.rstrip('/')}/",
-    "download.prompt_for_download": False,
-    "download.directory_upgrade": True,
-})
-print(f"Download em {DATA_DIR}")
-
-# Create WebDriver instance with ChromeDriverManager
 driver = webdriver.Chrome(ChromeDriverManager().install(), options=options)
-print('CHROME FOI CARREGADO')
 
 
 # In[72]:
@@ -204,8 +196,9 @@ from datetime import datetime, timedelta
 # Data e hora de criação desejada (uma hora atrás)
 data_hora_desejada = datetime.now() - timedelta(hours=1)
 
+
 # Procurar arquivo XLSX na pasta de downloads
-arquivos_xlsx = glob.glob(os.path.join(pasta_downloads, '*.xlsx'))
+arquivos_xlsx = glob.glob(os.path.join(DOWNLOAD_DIR, '*.xlsx'))
 
 # Verificar se há pelo menos um arquivo XLSX encontrado
 if arquivos_xlsx:
@@ -242,7 +235,10 @@ else:
 # Data de hoje
 from datetime import date
 data_atual = date.today()
-nome_arquivo = f'dados_{data_atual.strftime("%Y-%m-%d")}.csv'
+nome_arquivo = os.path.join(
+    DATA_DIR,
+    f'dados_{data_atual.strftime("%Y-%m-%d")}.csv'
+)
 df.to_csv(nome_arquivo, index=False)
 print('SALVEI O CSV')
 
@@ -255,7 +251,6 @@ df_geral = pd.read_csv(nome_arquivo)
 
 df_geral.columns = df.columns.str.lower().str.replace(' ', '_').str.replace('(', '_').str.replace(')', '').str.replace('__', '_')
 pd.options.display.float_format = '{:.6f}'.format
-nome_arquivo = f'dados_{data_atual.strftime("%Y-%m-%d")}.csv'
 df_geral.to_csv(nome_arquivo, index=False)
 df_geral.head(3)
 
@@ -277,8 +272,12 @@ df_partido['Porcentagem'] = df_partido['empenhado_r$'] / df_partido['dotação_i
 
 # Exibir o DataFrame com a porcentagem total de cada partido
 tabela_final = df_partido.sort_values('Porcentagem', ascending=False)
+tabela_final_path = os.path.join(
+    DATA_DIR,
+    f'tabela_final_{data_atual.strftime("%Y-%m-%d")}.csv'
+)
 
-tabela_final.to_csv(f'tabela_final_{data_atual.strftime("%Y-%m-%d")}.csv')
+tabela_final.to_csv(tabela_final_path)
 
 tabela_final
 
